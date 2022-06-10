@@ -22,15 +22,15 @@ let modifyFile3 = (val) => {
 const bacaData = (fnCallBack) => {
   fs.readFile(file1, "utf8", (err, data1) => {
     if (err) {
-      return console.log("Oops, ada error" + err);
+      fnCallBack("Oops, ada error" + err, null);
     }
     fs.readFile(file2, "utf8", (err, data2) => {
       if (err) {
-        return console.log("Oops, ada error" + err);
+        fnCallBack("Oops, ada error" + err, null);
       }
       fs.readFile(file3, "utf8", (err, data3) => {
         if (err) {
-          return console.log("Oops, ada error" + err);
+          fnCallBack("Oops, ada error" + err, null);
         }
         let parseFile1 = JSON.parse(data1);
         let parseFile2 = JSON.parse(data2);
@@ -40,7 +40,7 @@ const bacaData = (fnCallBack) => {
         result.push(parseFile1.message.split(" ")[1]);
         result.push(parseFile2[0].message.split(" ")[1]);
         result.push(parseFile3[0].data.message.split(" ")[1]);
-        return console.log(result);
+        fnCallBack(null, result);
       });
     });
   });
