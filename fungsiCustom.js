@@ -20,32 +20,27 @@ let modifyFile3 = (val) => {
 // gunakan variabel file1, file2, dan file3
 
 const bacaData = (fnCallBack) => {
-  const result = [];
-  fs.readFile(file1, "utf-8", (err, data) => {
+  fs.readFile(file1, "utf8", (err, data1) => {
     if (err) {
-      fnCallBack(err, null);
-    } else {
-      const dataParse = JSON.parse(data);
-      const dataSplit = dataParse.message.split(" ");
-      result.push(dataSplit[1]);
+      return console.log("Oops, ada error" + err);
     }
-    fs.readFile(file2, "utf-8", (err, data) => {
+    fs.readFile(file2, "utf8", (err, data2) => {
       if (err) {
-        fnCallBack(err, null);
-      } else {
-        const dataParse = JSON.parse(data);
-        const dataSplit = dataParse[0].message.split(" ");
-        result.push(dataSplit[1]);
+        return console.log("Oops, ada error" + err);
       }
-      fs.readFile(file3, "utf-8", (err, data) => {
+      fs.readFile(file3, "utf8", (err, data3) => {
         if (err) {
-          fnCallBack(err, null);
-        } else {
-          const dataParse = JSON.parse(data);
-          const dataSplit = dataParse[0].data.message.split(" ");
-          result.push(dataSplit[1]);
+          return console.log("Oops, ada error" + err);
         }
-        fnCallBack(null, result);
+        let parseFile1 = JSON.parse(data1);
+        let parseFile2 = JSON.parse(data2);
+        let parseFile3 = JSON.parse(data3);
+
+        const result = [];
+        result.push(parseFile1.message.split(" ")[1]);
+        result.push(parseFile2[0].message.split(" ")[1]);
+        result.push(parseFile3[0].data.message.split(" ")[1]);
+        return console.log(result);
       });
     });
   });
